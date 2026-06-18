@@ -14,19 +14,29 @@
     /* ===== Reset ===== */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* ===== CSS Variables ===== */
+    /* ===== CSS Variables (Playful theme) ===== */
     :root {
-      --bg: #0a0a0a;
-      --text: #f0f0f0;
-      --text-secondary: #888;
-      --accent: #3b82f6;
-      --accent-hover: #60a5fa;
-      --surface: #1a1a1a;
-      --border: #2a2a2a;
-      --hint-bg: #1a1a1a;
-      --hint-border: #333;
-      --hint-color: #666;
-      --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      --bg: #fef7f0;
+      --surface: #ffffff;
+      --text: #2d2d2d;
+      --text-primary: #2d2d2d;
+      --text-secondary: #777777;
+      --accent: #ff6b6b;
+      --accent-hover: #ff8787;
+      --accent-coral: #ff6b6b;
+      --accent-mint: #51cf66;
+      --accent-sky: #74c0fc;
+      --accent-lavender: #cc5de8;
+      --accent-yellow: #ffd43b;
+      --border: #f0e0d0;
+      --hint-bg: #fef7f0;
+      --hint-border: #f0e0d0;
+      --hint-color: #999999;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --font-body: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -34,7 +44,7 @@
     body {
       font-family: var(--font-body);
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-primary);
       overflow: hidden;
       height: 100vh;
       width: 100vw;
@@ -42,44 +52,53 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ===== Progress Bar ===== */
+    /* ===== Progress Bar (pastel rainbow) ===== */
     .progress-bar {
       position: fixed; top: 0; left: 0;
-      height: 3px; background: var(--accent);
-      transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      z-index: 1000;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent-coral), var(--accent-yellow), var(--accent-mint), var(--accent-sky), var(--accent-lavender));
+      background-size: 400% 100%;
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 1000; border-radius: 0 4px 4px 0;
     }
 
     /* ===== Slide Counter ===== */
     .slide-counter {
-      position: fixed; bottom: 24px; right: 32px;
-      font-family: var(--font-mono); font-size: 13px;
+      position: fixed; bottom: 24px; right: 28px;
+      font-size: 14px; font-weight: 600;
       color: var(--text-secondary); z-index: 900; user-select: none;
+      background: var(--surface); padding: 6px 16px; border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--border);
     }
 
     /* ===== Keyboard Hints ===== */
     .hint {
-      position: fixed; bottom: 24px; left: 32px;
+      position: fixed; bottom: 24px; left: 28px;
       display: flex; gap: 8px; align-items: center;
       z-index: 900; user-select: none;
+      background: var(--surface); padding: 6px 16px; border-radius: 20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid var(--border);
+      opacity: 0.6; transition: opacity 0.3s ease;
     }
+    .hint:hover { opacity: 1; }
     .hint kbd {
-      display: inline-block; background: var(--hint-bg);
-      border: 1px solid var(--hint-border); color: var(--hint-color);
-      font-family: var(--font-mono); font-size: 11px;
-      padding: 2px 7px; border-radius: 4px; line-height: 1.6;
+      display: inline-block; background: var(--bg);
+      border: 1px solid var(--border); color: var(--accent-coral);
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+      padding: 2px 7px; border-radius: 6px; line-height: 1.6;
     }
-    .hint span { color: var(--hint-color); font-size: 11px; margin-right: 4px; }
+    .hint span { color: var(--text-secondary); font-size: 11px; margin-right: 4px; }
 
     /* ===== Fullscreen Button ===== */
     .fullscreen-btn {
       position: fixed; top: 16px; right: 24px;
       background: var(--surface); border: 1px solid var(--border);
       color: var(--text-secondary); font-family: var(--font-body);
-      font-size: 13px; padding: 6px 14px; border-radius: 6px;
+      font-size: 13px; padding: 6px 16px; border-radius: 20px;
       cursor: pointer; z-index: 900; transition: all 0.2s ease; user-select: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-    .fullscreen-btn:hover { background: var(--border); color: var(--text); }
+    .fullscreen-btn:hover { background: var(--accent-coral); color: #fff; border-color: var(--accent-coral); }
 
     /* ===== Deck & Slides ===== */
     .deck { width: 100vw; height: 100vh; position: relative; }
@@ -92,13 +111,18 @@
       padding: 60px 80px;
       opacity: 0; visibility: hidden; overflow-y: auto;
       transition: opacity 0.5s ease, visibility 0.5s ease;
+      background: var(--bg); color: var(--text-primary);
     }
     .slide.active { opacity: 1; visibility: visible; }
 
-    /* ===== Stagger Animations ===== */
+    /* ===== Stagger Animations (bouncy spring) ===== */
+    @keyframes staggerIn {
+      0% { opacity: 0; transform: translateY(24px) scale(0.96); }
+      60% { transform: translateY(-4px) scale(1.01); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
     .slide.active .a {
-      animation: staggerIn 0.6s ease forwards;
-      opacity: 0; transform: translateY(18px);
+      animation: staggerIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     }
     .slide.active .a:nth-child(1) { animation-delay: 0.05s; }
     .slide.active .a:nth-child(2) { animation-delay: 0.12s; }
@@ -110,114 +134,178 @@
     .slide.active .a:nth-child(8) { animation-delay: 0.54s; }
     .slide.active .a:nth-child(9) { animation-delay: 0.61s; }
     .slide.active .a:nth-child(10) { animation-delay: 0.68s; }
-    @keyframes staggerIn { to { opacity: 1; transform: translateY(0); } }
 
     /* ===== Typography ===== */
-    h1 { font-size: 3.2rem; font-weight: 700; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 16px; }
-    h2 { font-size: 2.2rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }
-    h3 { font-size: 1.4rem; font-weight: 600; line-height: 1.3; margin-bottom: 8px; }
+    h1 { font-size: 3.4rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 16px; }
+    h2 { font-size: 2.3rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; }
+    h3 { font-size: 1.4rem; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
     p  { font-size: 1.15rem; line-height: 1.7; color: var(--text-secondary); max-width: 680px; }
-    .hi { color: var(--accent); }
+    .hi { color: var(--accent-coral); font-weight: 700; }
 
-    /* ===== Tag / Overline ===== */
+    /* ===== Tag / Overline (pill) ===== */
     .tag {
-      display: inline-block; background: var(--accent); color: #fff;
-      font-size: 0.72rem; font-weight: 600; padding: 4px 12px;
-      border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+      display: inline-block; background: rgba(255, 107, 107, 0.12); color: var(--accent-coral);
+      font-size: 0.8rem; font-weight: 600; padding: 6px 16px;
+      border-radius: 20px; letter-spacing: 0.02em;
       margin-bottom: 18px;
     }
 
+    /* ===== Pill tags (title tag-row) ===== */
+    .tag-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+    .pill-tag { display: inline-block; padding: 6px 18px; font-size: 0.82rem; font-weight: 600; border-radius: 20px; background: rgba(255, 107, 107, 0.12); color: var(--accent-coral); }
+    .pill-tag.mint { background: rgba(81, 207, 102, 0.12); color: #37a34d; }
+    .pill-tag.sky { background: rgba(116, 192, 252, 0.12); color: #3a8fd4; }
+    .pill-tag.lavender { background: rgba(204, 93, 232, 0.12); color: #a844c4; }
+    .pill-tag.yellow { background: rgba(255, 212, 59, 0.15); color: #b8960a; }
+
     /* ===== Title Slide ===== */
     .slide-title { text-align: center; }
+    .slide-title .emoji-accent { font-size: 56px; display: block; margin-bottom: 8px; }
+    .slide-title h1 {
+      background: linear-gradient(135deg, var(--accent-coral), var(--accent-lavender), var(--accent-sky));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
     .slide-title .subtitle {
-      font-size: 1.3rem; color: var(--text-secondary);
-      margin-bottom: 24px; font-weight: 400;
+      font-size: 1.35rem; color: var(--text-secondary);
+      margin-bottom: 4px; font-weight: 400;
     }
     .slide-title .date {
       font-family: var(--font-mono); font-size: 0.9rem;
-      color: var(--hint-color); letter-spacing: 0.05em;
+      color: var(--text-secondary); letter-spacing: 0.05em; margin-top: 16px;
     }
 
     /* ===== Agenda / TOC ===== */
-    .toc-list { list-style: none; text-align: left; width: 100%; max-width: 640px; }
+    .toc-list { list-style: none; text-align: left; width: 100%; max-width: 680px; margin-top: 12px; }
     .toc-list li {
-      display: flex; align-items: baseline; gap: 16px;
-      padding: 14px 0; border-bottom: 1px solid var(--border);
-      font-size: 1.15rem; color: var(--text);
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 20px;
+      font-size: 1.15rem; font-weight: 500; color: var(--text-primary);
+      border-radius: var(--radius-md);
+      transition: background 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    .toc-list li:last-child { border-bottom: none; }
-    .toc-num { font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); font-weight: 600; min-width: 28px; }
-    .toc-list .toc-desc { color: var(--text-secondary); font-size: 0.95rem; margin-left: 6px; }
+    .toc-list li:hover { background: rgba(255, 107, 107, 0.06); transform: translateX(6px); }
+    .toc-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+    }
+    .toc-list li:nth-child(1) .toc-num { background: rgba(255, 107, 107, 0.15); color: var(--accent-coral); }
+    .toc-list li:nth-child(2) .toc-num { background: rgba(255, 212, 59, 0.18); color: #b8960a; }
+    .toc-list li:nth-child(3) .toc-num { background: rgba(81, 207, 102, 0.15); color: #37a34d; }
+    .toc-list li:nth-child(4) .toc-num { background: rgba(116, 192, 252, 0.15); color: #3a8fd4; }
+    .toc-list li:nth-child(5) .toc-num { background: rgba(204, 93, 232, 0.15); color: #a844c4; }
+    .toc-emoji { font-size: 22px; flex-shrink: 0; }
+    .toc-list .toc-desc { color: var(--text-secondary); font-size: 0.95rem; margin-left: 2px; }
 
     /* ===== Content Slide ===== */
     .content-body { text-align: left; max-width: 760px; width: 100%; }
     .content-body h2 { margin-bottom: 16px; }
-    .content-body p { margin-bottom: 18px; }
-    .content-body ul { list-style: none; padding: 0; }
+    .content-body p { margin-bottom: 18px; color: var(--text-secondary); }
+    .content-body ul { list-style: none; padding: 0; margin-top: 8px; }
     .content-body ul li {
-      position: relative; padding-left: 24px; margin-bottom: 12px;
-      font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;
+      position: relative; padding-left: 32px; margin-bottom: 12px;
+      font-size: 1.1rem; color: var(--text-primary); line-height: 1.6;
     }
     .content-body ul li::before {
-      content: ''; position: absolute; left: 0; top: 10px;
-      width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
+      content: ''; position: absolute; left: 0; top: 9px;
+      width: 12px; height: 12px; border-radius: 50%;
     }
-    .content-body ul li strong { color: var(--text); font-weight: 600; }
+    .content-body ul li:nth-child(1)::before { background: var(--accent-coral); }
+    .content-body ul li:nth-child(2)::before { background: var(--accent-yellow); }
+    .content-body ul li:nth-child(3)::before { background: var(--accent-mint); }
+    .content-body ul li:nth-child(4)::before { background: var(--accent-sky); }
+    .content-body ul li:nth-child(5)::before { background: var(--accent-lavender); }
+    .content-body ul li strong { color: var(--text-primary); font-weight: 700; }
     .note-inline {
-      margin-top: 20px; font-size: 0.92rem; color: var(--hint-color);
-      border-left: 2px solid var(--border); padding-left: 14px;
+      margin-top: 20px; font-size: 0.92rem; color: var(--text-secondary);
+      border-left: 3px solid var(--accent-yellow); padding: 12px 16px;
+      background: rgba(255, 212, 59, 0.06); border-radius: 8px;
     }
 
-    /* ===== Comparison ===== */
-    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; max-width: 900px; }
-    .comparison-col { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
-    .comparison-col h3 { margin-bottom: 16px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.06em; }
-    .comparison-col.pros h3 { color: var(--accent); }
-    .comparison-col.cons h3 { color: var(--text-secondary); }
+    /* ===== Comparison (pros = mint/check, cons = coral/cross) ===== */
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; max-width: 900px; }
+    .comparison-col { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; }
+    .comparison-col h3 { margin-bottom: 16px; font-size: 1.15rem; font-weight: 700; }
+    .comparison-col.pros { background: rgba(81, 207, 102, 0.04); border-color: rgba(81, 207, 102, 0.2); }
+    .comparison-col.pros h3 { color: #37a34d; }
+    .comparison-col.cons { background: rgba(255, 107, 107, 0.04); border-color: rgba(255, 107, 107, 0.2); }
+    .comparison-col.cons h3 { color: var(--accent-coral); }
     .comparison-col ul { list-style: none; padding: 0; }
-    .comparison-col ul li { padding: 9px 0; font-size: 1rem; color: var(--text-secondary); border-bottom: 1px solid var(--border); line-height: 1.5; }
-    .comparison-col ul li:last-child { border-bottom: none; }
-    .comparison-col.pros ul li::before { content: '\2713  '; color: #22c55e; }
-    .comparison-col.cons ul li::before { content: '\2717  '; color: #ef4444; }
+    .comparison-col ul li { padding: 9px 0; padding-left: 26px; position: relative; font-size: 1rem; color: var(--text-primary); line-height: 1.6; }
+    .comparison-col.pros ul li::before { content: '\2713'; position: absolute; left: 0; color: var(--accent-mint); font-weight: 700; }
+    .comparison-col.cons ul li::before { content: '\2717'; position: absolute; left: 0; color: var(--accent-coral); font-weight: 700; }
 
-    /* ===== Flow / Steps ===== */
-    .steps { display: flex; align-items: flex-start; gap: 0; width: 100%; max-width: 1000px; justify-content: center; }
-    .step { display: flex; flex-direction: column; align-items: center; text-align: center; flex: 1; max-width: 180px; }
-    .step-num {
-      width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; margin-bottom: 14px; flex-shrink: 0;
+    /* ===== Flow / Steps (playful cards) ===== */
+    .steps { display: flex; align-items: center; gap: 12px; width: 100%; max-width: 1000px; justify-content: center; }
+    .step {
+      flex: 1; max-width: 180px; text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 24px 14px; border-radius: var(--radius-lg);
+      background: var(--surface); border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
-    .step-title { font-weight: 600; font-size: 1rem; margin-bottom: 6px; color: var(--text); }
-    .step-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-    .step-arrow { display: flex; align-items: center; justify-content: center; padding-top: 12px; color: var(--border); font-size: 1.5rem; flex-shrink: 0; width: 32px; }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .step-circle {
+      width: 54px; height: 54px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 12px; flex-shrink: 0;
+    }
+    .step:nth-child(1) .step-circle { background: rgba(255, 107, 107, 0.15); }
+    .step:nth-child(3) .step-circle { background: rgba(255, 212, 59, 0.18); }
+    .step:nth-child(5) .step-circle { background: rgba(81, 207, 102, 0.15); }
+    .step:nth-child(7) .step-circle { background: rgba(116, 192, 252, 0.15); }
+    .step:nth-child(9) .step-circle { background: rgba(204, 93, 232, 0.15); }
+    .step-num { font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .step-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; color: var(--text-primary); }
+    .step-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+    .step-arrow { display: flex; align-items: center; justify-content: center; color: var(--border); font-size: 1.5rem; flex-shrink: 0; }
 
-    /* ===== Cards ===== */
-    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; max-width: 940px; }
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; transition: border-color 0.2s ease, transform 0.2s ease; text-align: left; }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .card-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
-    .card-kicker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 6px; }
-    .card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); }
-    .card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; }
+    /* ===== Cards (playful tilt-on-hover) ===== */
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; width: 100%; max-width: 920px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 32px 24px; text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+    .card:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+    .card-icon { font-size: 44px; margin-bottom: 16px; display: block; }
+    .card-kicker {
+      display: inline-block; font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.02em; margin-bottom: 10px;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .card:nth-child(1) .card-kicker { background: rgba(255, 107, 107, 0.12); color: var(--accent-coral); }
+    .card:nth-child(2) .card-kicker { background: rgba(81, 207, 102, 0.12); color: #37a34d; }
+    .card:nth-child(3) .card-kicker { background: rgba(116, 192, 252, 0.12); color: #3a8fd4; }
+    .card h3 { font-size: 1.15rem; margin-bottom: 8px; color: var(--text-primary); font-weight: 700; }
+    .card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; max-width: none; }
 
     /* ===== Closing Slide ===== */
     .slide-closing { text-align: center; }
-    .slide-closing h1 { font-size: 3.6rem; margin-bottom: 12px; }
-    .slide-closing p { text-align: center; margin: 0 auto; }
-    .contact-links { display: flex; gap: 16px; margin-top: 32px; justify-content: center; flex-wrap: wrap; }
-    .contact-link {
-      font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent);
-      text-decoration: none; padding: 8px 20px; border: 1px solid var(--border);
-      border-radius: 8px; transition: all 0.2s ease;
+    .slide-closing .closing-emoji { font-size: 60px; display: block; margin-bottom: 8px; }
+    .slide-closing h1 {
+      font-size: 4rem; margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--accent-coral), var(--accent-lavender), var(--accent-sky));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .contact-link:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.08); }
+    .slide-closing p { text-align: center; margin: 0 auto; color: var(--text-secondary); }
+    .contact-links { display: flex; gap: 12px; margin-top: 28px; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
+      text-decoration: none; padding: 10px 24px; border-radius: 24px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+    .contact-links .contact-link:nth-child(1) { background: rgba(255, 107, 107, 0.12); color: var(--accent-coral); }
+    .contact-links .contact-link:nth-child(2) { background: rgba(116, 192, 252, 0.12); color: #3a8fd4; }
+    .contact-link:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
 
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .slide { padding: 40px 28px; }
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.5rem; }
+      h1 { font-size: 2.2rem; }
+      h2 { font-size: 1.6rem; }
       .comparison { grid-template-columns: 1fr; gap: 20px; }
       .cards { grid-template-columns: 1fr; gap: 16px; }
       .steps { flex-direction: column; align-items: center; gap: 16px; }
@@ -228,7 +316,7 @@
 
     /* ===== Print / PDF Export ===== */
     @media print {
-      body { overflow: visible; background: #0a0a0a; }
+      body { overflow: visible; background: #fef7f0; }
       .progress-bar, .slide-counter, .hint, .fullscreen-btn { display: none !important; }
       .deck { width: auto; height: auto; position: static; }
       .slide {
@@ -267,10 +355,15 @@
     <!-- Slide 1: Title -->
     <div class="slide active" data-notes="환영합니다. 오늘부터 5회에 걸쳐 진행하는 'AI 기술 내제화 강의'를 시작합니다. [잠깐 멈춤] 이 강의의 한 줄 목표는 단순합니다 — 우리 ICT운영팀이 AI를 '구경하는 팀'이 아니라 '직접 쓰는 팀'이 되는 것입니다. 오늘은 전체 5회 커리큘럼이 어떤 흐름으로 이어지는지, 그리고 각 회차에서 무엇을 다루는지 지도를 먼저 펼쳐 보겠습니다. [약 1분]">
       <div class="slide-title">
-        <div class="a tag">ICT운영팀</div>
+        <span class="a emoji-accent">🚀</span>
         <h1 class="a">AI 기술 내제화 강의</h1>
         <p class="a subtitle">5회에 걸쳐 기르는 AI 활용 기초체력</p>
-        <p class="a date">2026.06.18 · 커리큘럼 오리엔테이션</p>
+        <div class="a tag-row">
+          <span class="pill-tag">ICT운영팀</span>
+          <span class="pill-tag mint">5회 커리큘럼</span>
+          <span class="pill-tag sky">오리엔테이션</span>
+        </div>
+        <p class="a date">2026.06.18</p>
       </div>
     </div>
 
@@ -278,7 +371,7 @@
     <div class="slide" data-notes="먼저 '왜 지금인가'부터 짚겠습니다. AI는 이제 일부 전문가만의 도구가 아닙니다. 검색하고, 글을 쓰고, 코드를 만들고, 운영 업무를 보조하는 방식 자체를 바꾸고 있죠. [청중에게] 최근 업무에서 AI 도구를 한 번이라도 써보신 분? [잠깐] 문제는 '도구는 많은데 어떻게 잘 쓰는지를 아는 조직은 드물다'는 겁니다. 외부에 의존만 하면 속도도, 보안도, 우리 업무 맥락도 결국 우리 것이 되지 않습니다. 그래서 '내제화' — 우리가 직접 이해하고 다루는 것이 핵심입니다. [약 1분 30초]">
       <div class="content-body">
         <div class="a tag">Why Now</div>
-        <h2 class="a">왜 지금, <span class="hi">내제화</span>인가</h2>
+        <h2 class="a">🔥 왜 지금, <span class="hi">내제화</span>인가</h2>
         <p class="a">AI는 더 이상 일부 전문가의 도구가 아닙니다. 업무의 방식 자체를 바꾸고 있습니다.</p>
         <ul>
           <li class="a">AI 도구는 빠르게 늘지만, <strong>'어떻게 쓰는가'</strong>를 아는 조직은 드뭅니다</li>
@@ -293,7 +386,7 @@
     <div class="slide" data-notes="이 강의의 목표를 세 단계로 정리했습니다. 첫째 '이해' — 핵심 개념과 동작 원리를 남의 말이 아니라 우리 언어로 설명할 수 있는 수준. 둘째 '활용' — 개념에 머물지 않고 실제로 에이전트를 업무 흐름에 적용해 보는 것. 셋째 '적용' — 운영팀답게, 보안과 안정성까지 고려해 도입하고 관리할 판단력을 갖추는 것. 핵심 단어는 '기초체력'입니다. 한 번의 묘기가 아니라, 앞으로 어떤 AI 도구가 나와도 스스로 판단할 수 있는 체력을 기르는 게 목적입니다. [약 1분 20초]">
       <div class="content-body">
         <div class="a tag">Goal</div>
-        <h2 class="a">강의 목표</h2>
+        <h2 class="a">🎯 강의 목표</h2>
         <p class="a">5회에 걸쳐 최신 AI 핵심 기술을 <span class="hi">이해하고 활용</span>할 수 있는 기초체력을 길러, 실제 업무에 적용합니다.</p>
         <ul>
           <li class="a"><strong>이해</strong> · 핵심 개념과 동작 원리를 우리 언어로 설명할 수 있다</li>
@@ -306,46 +399,51 @@
 
     <!-- Slide 4: Agenda / TOC -->
     <div class="slide" data-notes="전체 커리큘럼을 한눈에 보겠습니다. 다섯 번의 만남입니다. 1강에서 AI 에이전트가 무엇인지 개념을 잡고, 2강에서 에이전트·스킬·오케스트레이션의 역할과 경계를 나눠 이해합니다. 3강은 요즘 화제인 바이브 코딩의 본질과 한계를, 4강은 에이전트를 신뢰성 있게 만드는 Agentic Engineering을, 마지막 5강은 그 에이전트를 떠받치는 런타임 기반인 Harness Engineering을 다룹니다. 점점 '개념'에서 '운영'으로 내려가는 구조라고 보시면 됩니다. [약 1분]">
-      <h2 class="a">커리큘럼 한눈에</h2>
+      <h2 class="a">📋 커리큘럼 한눈에</h2>
       <ol class="toc-list">
-        <li class="a"><span class="toc-num">01</span> AI Agent <span class="toc-desc">— 정의 · 구성요소 · 동작원리 · 사례</span></li>
-        <li class="a"><span class="toc-num">02</span> Agent · Skill · Orchestration <span class="toc-desc">— 역할과 경계</span></li>
-        <li class="a"><span class="toc-num">03</span> Vibe Coding <span class="toc-desc">— 본질과 한계</span></li>
-        <li class="a"><span class="toc-num">04</span> Agentic Engineering <span class="toc-desc">— 신뢰할 수 있는 에이전트 설계</span></li>
-        <li class="a"><span class="toc-num">05</span> Harness Engineering <span class="toc-desc">— 에이전트를 떠받치는 런타임</span></li>
+        <li class="a"><span class="toc-num">01</span><span class="toc-emoji">🤖</span> AI Agent <span class="toc-desc">— 정의 · 구성요소 · 동작원리 · 사례</span></li>
+        <li class="a"><span class="toc-num">02</span><span class="toc-emoji">🧩</span> Agent · Skill · Orchestration <span class="toc-desc">— 역할과 경계</span></li>
+        <li class="a"><span class="toc-num">03</span><span class="toc-emoji">🎨</span> Vibe Coding <span class="toc-desc">— 본질과 한계</span></li>
+        <li class="a"><span class="toc-num">04</span><span class="toc-emoji">⚙️</span> Agentic Engineering <span class="toc-desc">— 신뢰할 수 있는 에이전트 설계</span></li>
+        <li class="a"><span class="toc-num">05</span><span class="toc-emoji">🛡️</span> Harness Engineering <span class="toc-desc">— 에이전트를 떠받치는 런타임</span></li>
       </ol>
     </div>
 
     <!-- Slide 5: Roadmap (Steps) -->
     <div class="slide" data-notes="다섯 회차는 따로 노는 주제가 아니라 하나의 흐름입니다. 개념을 잡고(Agent), 구성 요소들의 역할을 나누고(구조), 가장 쉬운 진입점인 바이브 코딩으로 직접 해보고(실전), 그것을 신뢰성 있게 만드는 공학적 접근(Agentic)을 배운 뒤, 마지막으로 이 모든 걸 떠받치는 운영 기반(Harness)까지 내려갑니다. 왼쪽에서 오른쪽으로 갈수록 '개념'에서 '실제 운영'에 가까워진다는 점을 기억해 주세요. [약 50초]">
-      <h2 class="a" style="margin-bottom: 40px;">학습 로드맵</h2>
+      <h2 class="a" style="margin-bottom: 40px;">🗺️ 학습 로드맵</h2>
       <div class="steps">
         <div class="step a">
-          <div class="step-num">1</div>
+          <div class="step-circle">💡</div>
+          <div class="step-num">STEP 1</div>
           <div class="step-title">개념</div>
           <div class="step-desc">AI Agent 이해</div>
         </div>
         <div class="step-arrow a">&rarr;</div>
         <div class="step a">
-          <div class="step-num">2</div>
+          <div class="step-circle">🧩</div>
+          <div class="step-num">STEP 2</div>
           <div class="step-title">구조</div>
           <div class="step-desc">역할과 경계</div>
         </div>
         <div class="step-arrow a">&rarr;</div>
         <div class="step a">
-          <div class="step-num">3</div>
+          <div class="step-circle">🎨</div>
+          <div class="step-num">STEP 3</div>
           <div class="step-title">실전</div>
           <div class="step-desc">Vibe Coding</div>
         </div>
         <div class="step-arrow a">&rarr;</div>
         <div class="step a">
-          <div class="step-num">4</div>
+          <div class="step-circle">⚙️</div>
+          <div class="step-num">STEP 4</div>
           <div class="step-title">공학</div>
           <div class="step-desc">Agentic Engineering</div>
         </div>
         <div class="step-arrow a">&rarr;</div>
         <div class="step a">
-          <div class="step-num">5</div>
+          <div class="step-circle">🛡️</div>
+          <div class="step-num">STEP 5</div>
           <div class="step-title">운영</div>
           <div class="step-desc">Harness Engineering</div>
         </div>
@@ -356,7 +454,7 @@
     <div class="slide" data-notes="이제 회차별 미리보기입니다. 1강은 모든 것의 출발점, AI 에이전트입니다. 에이전트는 한마디로 '목표를 받아 스스로 판단하고 행동하는 AI'입니다. 단순히 질문에 답하는 챗봇과 다른 점은 '도구를 써서 실제로 일을 한다'는 거죠. 구성요소는 네 가지로 나눠 봅니다 — 판단하는 두뇌(LLM), 실제 행동을 하는 손(도구), 기억(메모리), 그리고 계획(플래너). 동작은 인지하고, 계획하고, 행동하고, 결과를 관찰하는 루프의 반복입니다. 운영 업무로 치면 로그 분석이나 반복 작업 자동화에 바로 연결됩니다. [약 1분 30초]">
       <div class="content-body">
         <div class="a tag">Session 01</div>
-        <h2 class="a">AI <span class="hi">Agent</span></h2>
+        <h2 class="a">🤖 AI <span class="hi">Agent</span></h2>
         <p class="a">스스로 목표를 이해하고, 도구를 사용해, 행동으로 옮기는 AI.</p>
         <ul>
           <li class="a"><strong>정의</strong> · 목표를 받아 스스로 판단하고 행동하는 AI 시스템</li>
@@ -371,7 +469,7 @@
     <div class="slide" data-notes="2강은 헷갈리기 쉬운 세 개념의 역할과 경계를 나눕니다. 저는 이걸 '누가 / 어떻게 / 언제·누구와'로 기억하시라고 권합니다. 에이전트는 '누가' — 목표를 책임지는 주체입니다. 스킬은 '어떻게' — 특정 일을 해내는 능력이나 방법, 재사용되는 도구 묶음이죠. 오케스트레이션은 '언제·누구와' — 여러 에이전트와 스킬을 어떤 순서로 어떻게 조율할지를 정하는 지휘자 역할입니다. 이 세 가지를 분리해서 보면, 복잡한 AI 시스템도 구조가 또렷하게 보입니다. [약 1분 20초]">
       <div class="content-body" style="max-width: 940px;">
         <div class="a tag">Session 02</div>
-        <h2 class="a">Agent · Skill · Orchestration</h2>
+        <h2 class="a">🧩 Agent · Skill · Orchestration</h2>
         <p class="a" style="margin-bottom: 28px;">누가 · 어떻게 · 언제·누구와 — 역할과 경계를 나눠 이해합니다</p>
       </div>
       <div class="cards">
@@ -400,7 +498,7 @@
     <div class="slide" data-notes="3강은 요즘 가장 많이 회자되는 '바이브 코딩'입니다. 본질은 매력적입니다. 자연어로 의도를 전달하면 AI가 코드를 만들어 주니, 진입장벽이 확 낮아지고 아이디어를 즉시 형태로 만들 수 있죠. 하지만 운영팀이라면 반드시 한계도 알아야 합니다. 검증 없이 받아들인 코드는 위험하고, 유지보수와 디버깅 부담이 따라오며, '왜 이렇게 동작하는지 아무도 모르는' 이해 부채가 쌓입니다. 책임 소재도 모호해지고요. 이 강의에서는 '잘 쓰되, 한계를 알고 쓰는 법'을 함께 봅니다. [약 1분 20초]">
       <div class="content-body" style="max-width: 900px;">
         <div class="a tag">Session 03</div>
-        <h2 class="a" style="margin-bottom: 28px;">Vibe Coding — 본질과 한계</h2>
+        <h2 class="a" style="margin-bottom: 28px;">🎨 Vibe Coding — 본질과 한계</h2>
       </div>
       <div class="comparison a">
         <div class="comparison-col pros">
@@ -428,7 +526,7 @@
     <div class="slide" data-notes="4강 Agentic Engineering부터는 한 단계 깊어집니다. 데모에서 '한 번 잘 되는' 에이전트와, 실제 업무에서 '매번 신뢰할 수 있는' 에이전트는 전혀 다릅니다. 그 간극을 메우는 공학이 Agentic Engineering입니다. 네 가지 축으로 봅니다 — 무엇을 어떤 순서로 할지 정하는 도구·워크플로우 설계, 결과를 측정하고 개선하는 평가(eval), 실패와 오작동을 막는 가드레일, 그리고 모델에게 무엇을 알려줄지 설계하는 컨텍스트 엔지니어링. [참고: 이 회차 구성은 제 해석안이라, 팀에서 강조하고 싶은 방향이 있으면 조정 가능합니다.] [약 1분 30초]">
       <div class="content-body">
         <div class="a tag">Session 04</div>
-        <h2 class="a">Agentic <span class="hi">Engineering</span></h2>
+        <h2 class="a">⚙️ Agentic <span class="hi">Engineering</span></h2>
         <p class="a">'한 번 잘 되는' 데모를 넘어, 실제 업무에서 신뢰성 있게 일하도록 에이전트를 설계·운영하는 공학.</p>
         <ul>
           <li class="a"><strong>도구·워크플로우 설계</strong> · 무엇을, 어떤 순서로 할지 정의</li>
@@ -443,7 +541,7 @@
     <div class="slide" data-notes="마지막 5강 Harness Engineering입니다. 'harness'는 안전벨트·마구라는 뜻인데, 여기서는 원시 모델 하나를 '믿고 맡길 수 있는 에이전트'로 바꿔주는 런타임 스캐폴딩을 말합니다. 모델은 똑똑하지만 그 자체로는 도구를 고르지도, 기억을 관리하지도, 권한을 지키지도 못합니다. 그걸 둘러싸 주는 게 harness죠. 어떤 요청에 어떤 도구를 연결할지(도구 라우팅), 한정된 컨텍스트 창에 무엇을 남길지(메모리 관리), 무엇을 허용하고 막을지(권한·안전), 실행하고 관찰하고 교정하는 순환(피드백 루프) — 이 네 가지가 핵심입니다. 사실, 지금 이 강의 자료를 만든 Claude Code 자체가 하나의 harness입니다. 가장 가까운 예시인 셈이죠. [참고: 이 회차도 제 해석안입니다.] [약 1분 40초]">
       <div class="content-body">
         <div class="a tag">Session 05</div>
-        <h2 class="a">Harness <span class="hi">Engineering</span></h2>
+        <h2 class="a">🛡️ Harness <span class="hi">Engineering</span></h2>
         <p class="a">원시 모델 하나를 '믿고 맡길 수 있는 에이전트'로 바꾸는 런타임 스캐폴딩(harness)을 만드는 일.</p>
         <ul>
           <li class="a"><strong>도구 라우팅</strong> · 어떤 요청에 어떤 도구를 연결할지</li>
@@ -457,7 +555,7 @@
 
     <!-- Slide 11: Outcomes -->
     <div class="slide" data-notes="5회를 마치면 무엇이 달라질까요. 세 가지로 약속드립니다. 첫째, AI 도구를 맹신하지 않고 강점과 한계를 알고 비판적으로 쓰게 됩니다. 둘째, 우리 업무를 에이전트가 다룰 수 있는 흐름으로 나누고 설계할 수 있게 됩니다. 셋째, 운영팀답게 보안·권한·안정성을 고려해 AI를 도입하고 관리하는 관점을 갖추게 됩니다. 결국 '기초체력'이라는 한 단어로 돌아옵니다 — 어떤 도구가 와도 흔들리지 않는 힘입니다. [약 1분]">
-      <h2 class="a" style="margin-bottom: 32px;">학습 후, 무엇이 달라지나</h2>
+      <h2 class="a" style="margin-bottom: 32px;">✨ 학습 후, 무엇이 달라지나</h2>
       <div class="cards">
         <div class="card a">
           <span class="card-icon">&#128269;</span>
@@ -480,6 +578,7 @@
     <!-- Slide 12: Closing -->
     <div class="slide" data-notes="여기까지가 5회 커리큘럼의 지도입니다. 오늘은 큰 그림만 함께 봤고, 다음 시간부터 한 회차씩 깊이 들어갑니다. 질문은 언제든 환영합니다. 첫걸음은 1강 'AI Agent'입니다. 다음 시간에 만나요. 감사합니다. [잠깐 멈춤, 질문 받기]">
       <div class="slide-closing">
+        <span class="a closing-emoji">🎉</span>
         <h1 class="a">함께 시작합시다</h1>
         <p class="a">다섯 번의 만남으로, AI를 '쓰는 팀'이 됩니다.</p>
         <div class="contact-links a">
@@ -535,12 +634,12 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-         background: #111; color: #e0e0e0; padding: 28px; }
-  .sn { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #3b82f6; margin-bottom: 14px; }
-  .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-bottom: 8px; }
-  .nt { font-size: 17px; line-height: 1.85; color: #ddd; }
-  .divider { height: 1px; background: #2a2a2a; margin: 22px 0; }
-  .nx { font-size: 14px; line-height: 1.5; color: #888; }
+         background: #fffaf5; color: #2d2d2d; padding: 28px; }
+  .sn { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #ff6b6b; margin-bottom: 14px; font-weight: 600; }
+  .label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 8px; }
+  .nt { font-size: 17px; line-height: 1.85; color: #2d2d2d; }
+  .divider { height: 1px; background: #f0e0d0; margin: 22px 0; }
+  .nx { font-size: 14px; line-height: 1.5; color: #777; }
 </style></head><body>
   <div class="sn" id="sn"></div>
   <div class="label">발표자 노트</div>
